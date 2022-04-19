@@ -27,7 +27,7 @@ env_name="$(grep name $env_file | cut -d ':' -f2 | xargs)"
 ### !! Perhaps ~/ not needed at start here?
 env_loc_full=$env_loc/$env_name
 
-# ########################################################################################
+########################################################################################
 
 # Create new environment, if it doesn't exist yet
 #  Also includes if-statement to ensure 'remove' not specified
@@ -36,14 +36,15 @@ env_loc_full=$env_loc/$env_name
 if [[ ! -d $env_loc_full ]]; then
 	if [[ $1 != "remove" ]]; then
 		conda deactivate # for sanity
+		conda activate notebook # hopefully works
 		mamba create -f $env_file -p $env_loc_full # not "mamba env create"
-		mamba env update --file $env_file --prune
+		# mamba env update --file $env_file --prune
 		conda activate $env_name
-		python -m ipykernel install --user --name $env_name --display-name "IPython - $env_name"
+		python2 -m ipykernel install --user --name $env_name --display-name "IPython - $env_name"
 	fi
 fi
 
-# #########################################################################################
+#########################################################################################
 
 # Kill environment if it exists (and 'remove' is specified)
 if [[ -d $env_loc_full ]]; then

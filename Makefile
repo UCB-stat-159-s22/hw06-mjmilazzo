@@ -1,6 +1,7 @@
 # Make environment from scratch
 .PHONY : env
 env :
+	chmod a+x make_scripts/envsetup.sh
 	bash -ic make_scripts/envsetup.sh
 
 # Remove environment
