@@ -14,16 +14,14 @@ jobs:
     - uses: actions/checkout@v2
 
     # Install dependencies
-    - name: Set up Python 2.7
+    - name: Set up Python 3.9
       uses: actions/setup-python@v1
       with:
-        python-version: 2.7
+        python-version: 3.9
 
     - name: Install dependencies
       run: |
-        # pip install -r book-requirements.txt
-        # https://stackoverflow.com/questions/58272405/how-to-install-packages-from-yaml-file-in-conda
-        conda env update -n base --file ./environment.yml
+        pip install -r book-requirements.txt
     # Build the book
     - name: Build the book
       run: |
