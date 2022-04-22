@@ -9,7 +9,7 @@ env :
 cleanenv :
 	bash -ic 'make_scripts/envsetup.sh remove'
 
-# Build the JupyterBook normally
+# Build the JupyterBook locally
 .PHONY : html
 html :
 	chmod a+x make_scripts/bookgen.sh
@@ -23,8 +23,8 @@ html-hub :
 	ghp-import -n -p -f _build/html
 	## TODO: edit to be specific for this (or confirm)
 	
-	chmod a+x make_scripts/html-hub.sh
-	bash -ic make_scripts/html-hub.sh
+	#chmod a+x make_scripts/html-hub.sh
+	#bash -ic make_scripts/html-hub.sh
 	
 
 # Clean everything
