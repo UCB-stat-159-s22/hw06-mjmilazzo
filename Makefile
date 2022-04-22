@@ -12,19 +12,24 @@ cleanenv :
 # Build the JupyterBook normally
 .PHONY : html
 html :
-	jupyterbook build .
+	chmod a+x make_scripts/bookgen.sh
+	bash -ic make_scripts/bookgen.sh
+
 
 # Build the JupyterBook with URL Hub proxy
 .PHONY : html-hub
 html-hub :
+	pip install ghp-import
+	ghp-import -n -p -f _build/html
 	## TODO: edit to be specific for this (or confirm)
-	jupyter-book config sphinx .
-	sphinx-build  . _build/html -D html_baseurl=${JUPYTERHUB_SERVICE_PREFIX}/proxy/absolute/8000
-	python -m http.server
+	
+	chmod a+x make_scripts/html-hub.sh
+	bash -ic make_scripts/html-hub.sh
+	
 
 # Clean everything
 .PHONY : clean
 clean :
-	rm -rf figures/*
-	rm -rf audio/*
-	rm -rf _build/*
+	rm figures/*
+	rm audio/*
+	rm -rf _build
