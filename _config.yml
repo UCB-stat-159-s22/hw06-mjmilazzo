@@ -13,7 +13,7 @@ execute:
 
 # Information about where the book exists on the web
 repository:
-  url: https://github.com/mjmilazzo/hw06-mjmilazzo
+  url: https://github.com/UCB-stat-159-s22/hw06-mjmilazzo
   branch: main
 
 # Add GitHub buttons to your book
