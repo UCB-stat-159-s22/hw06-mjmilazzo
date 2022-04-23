@@ -149,7 +149,7 @@
         aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
     <div class="dropdown-buttons sourcebuttons">
         <a class="repository-button"
-            href="https://github.com/mjmilazzo/hw06-mjmilazzo"><button type="button" class="btn btn-secondary topbarbtn"
+            href="https://github.com/UCB-stat-159-s22/hw06-mjmilazzo"><button type="button" class="btn btn-secondary topbarbtn"
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         
@@ -171,7 +171,7 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/mjmilazzo/hw06-mjmilazzo/main?urlpath=tree/index.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/UCB-stat-159-s22/hw06-mjmilazzo/main?urlpath=tree/index.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="_static/images/logo_binder.svg"
@@ -1335,17 +1335,15 @@ The LIGO Scientific Collaboration, the Virgo Collaboration, <a class="reference 
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>For detector H1, maximum at 1126259462.4395 with SNR = 18.6, D_eff = 814.44, horizon = 1889.6 Mpc
+For detector L1, maximum at 1126259462.4324 with SNR = 13.2, D_eff = 999.74, horizon = 1650.6 Mpc
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>For detector L1, maximum at 1126259462.4324 with SNR = 13.2, D_eff = 999.74, horizon = 1650.6 Mpc
-</pre></div>
-</div>
+<img alt="_images/index_35_1.png" src="_images/index_35_1.png" />
 <img alt="_images/index_35_2.png" src="_images/index_35_2.png" />
 <img alt="_images/index_35_3.png" src="_images/index_35_3.png" />
 <img alt="_images/index_35_4.png" src="_images/index_35_4.png" />
 <img alt="_images/index_35_5.png" src="_images/index_35_5.png" />
 <img alt="_images/index_35_6.png" src="_images/index_35_6.png" />
-<img alt="_images/index_35_7.png" src="_images/index_35_7.png" />
 </div>
 </div>
 <div class="section" id="notes-on-these-results">
@@ -1599,29 +1597,23 @@ DATA
 <h2>Construct a csv file containing the whitened data and template<a class="headerlink" href="#construct-a-csv-file-containing-the-whitened-data-and-template" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="c1"># time vector around event</span>
-<span class="n">times</span> <span class="o">=</span> <span class="n">time</span><span class="o">-</span><span class="n">tevent</span>
-<span class="c1"># zoom in on [-0.2,0.05] seconds around event</span>
-<span class="n">irange</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">((</span><span class="n">times</span> <span class="o">&gt;=</span> <span class="o">-</span><span class="mf">0.2</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">times</span> <span class="o">&lt;</span> <span class="mf">0.05</span><span class="p">))</span>
-<span class="c1"># construct a data structure for a csv file:</span>
-<span class="n">dat</span> <span class="o">=</span> <span class="p">[</span><span class="n">times</span><span class="p">[</span><span class="n">irange</span><span class="p">],</span> <span class="n">strain_H1_whitenbp</span><span class="p">[</span><span class="n">irange</span><span class="p">],</span><span class="n">strain_L1_whitenbp</span><span class="p">[</span><span class="n">irange</span><span class="p">],</span>
-      <span class="n">template_H1</span><span class="p">[</span><span class="n">irange</span><span class="p">],</span><span class="n">template_L1</span><span class="p">[</span><span class="n">irange</span><span class="p">]</span> <span class="p">]</span>
-<span class="n">datcsv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dat</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
-<span class="c1"># make a csv filename, header, and format</span>
-<span class="n">fncsv</span> <span class="o">=</span> <span class="s1">&#39;data/&#39;</span><span class="o">+</span><span class="n">eventname</span><span class="o">+</span><span class="s1">&#39;_data.csv&#39;</span>
-<span class="n">headcsv</span> <span class="o">=</span> <span class="s1">&#39;data/&#39;</span><span class="o">+</span><span class="n">eventname</span><span class="o">+</span><span class="s1">&#39; time-&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">tevent</span><span class="p">)</span><span class="o">+</span> \
-    <span class="s1">&#39; (s),H1_data_whitened,L1_data_whitened,H1_template_whitened,L1_template_whitened&#39;</span>
-<span class="n">fmtcsv</span> <span class="o">=</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s2">&quot;</span><span class="si">%10.6f</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">5</span><span class="p">)</span>
-<span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="n">fncsv</span><span class="p">,</span> <span class="n">datcsv</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="n">fmtcsv</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="n">headcsv</span><span class="p">)</span>
+<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="c1"># # time vector around event</span>
+<span class="c1"># times = time-tevent</span>
+<span class="c1"># # zoom in on [-0.2,0.05] seconds around event</span>
+<span class="c1"># irange = np.nonzero((times &gt;= -0.2) &amp; (times &lt; 0.05))</span>
+<span class="c1"># # construct a data structure for a csv file:</span>
+<span class="c1"># dat = [times[irange], strain_H1_whitenbp[irange],strain_L1_whitenbp[irange],</span>
+<span class="c1">#       template_H1[irange],template_L1[irange] ]</span>
+<span class="c1"># datcsv = np.array(dat).transpose()</span>
+<span class="c1"># # make a csv filename, header, and format</span>
+<span class="c1"># fncsv = &#39;data/&#39;+eventname+&#39;_data.csv&#39;</span>
+<span class="c1"># headcsv = &#39;data/&#39;+eventname+&#39; time-&#39;+str(tevent)+ \</span>
+<span class="c1">#     &#39; (s),H1_data_whitened,L1_data_whitened,H1_template_whitened,L1_template_whitened&#39;</span>
+<span class="c1"># fmtcsv = &quot;,&quot;.join([&quot;%10.6f&quot;] * 5)</span>
+<span class="c1"># np.savetxt(fncsv, datcsv, fmt=fmtcsv, header=headcsv)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Wrote whitened data to file </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fncsv</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;You can download this file by clicking &#39;jupyter&#39; in the top left corner, or using the &#39;data&#39; menu in Azure.&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Wrote whitened data to file data/GW150914_data.csv
-You can download this file by clicking &#39;jupyter&#39; in the top left corner, or using the &#39;data&#39; menu in Azure.
+<span class="c1"># print(&quot;Wrote whitened data to file {0}&quot;.format(fncsv))</span>
+<span class="c1"># print(&quot;You can download this file by clicking &#39;jupyter&#39; in the top left corner, or using the &#39;data&#39; menu in Azure.&quot;)</span>
 </pre></div>
 </div>
 </div>
