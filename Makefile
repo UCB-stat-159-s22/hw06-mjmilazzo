@@ -5,12 +5,6 @@ env :
 	bash -ic make_scripts/envsetup.sh
 
 
-# Remove environment
-.PHONY : cleanenv
-cleanenv :
-	bash -ic 'make_scripts/envsetup.sh remove'
-
-
 # Build the JupyterBook locally
 .PHONY : html
 html :
