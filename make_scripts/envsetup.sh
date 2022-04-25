@@ -35,9 +35,9 @@ env_loc_full=$env_loc/$env_name
 # TODO: generalize to check if $CONDA_PREFIX location (and subdir of env) exists, if not create each
 if [[ ! -d $env_loc_full ]]; then
 	if [[ $1 != "remove" ]]; then
-		conda deactivate # for sanity
-		conda activate notebook # hopefully works
-		mamba create -f $env_file -p $env_loc_full # not "mamba env create"
+		# conda deactivate # for sanity
+		# conda activate notebook # hopefully works
+		mamba env create -f $env_file -p $env_loc_full # not "mamba env create" but depends on mamba version
 		# mamba env update --file $env_file --prune
 		conda activate $env_name
 		
