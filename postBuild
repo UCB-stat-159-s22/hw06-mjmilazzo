@@ -7,4 +7,7 @@
 # have been loaded (via the environment.yml file), so that when experimenting
 # in the Binder, users can not only see the package, but potentially modify it
 
+source ~/.bashrc && \
+conda init bash -v && \
+conda activate kernel && \ # ligo in local build, kernel in Binder
 pip install -e ligotools
