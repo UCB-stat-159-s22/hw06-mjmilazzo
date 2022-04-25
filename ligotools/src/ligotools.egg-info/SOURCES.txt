@@ -1,0 +1,7 @@
+setup.cfg
+setup.py
+src/ligotools.egg-info/PKG-INFO
+src/ligotools.egg-info/SOURCES.txt
+src/ligotools.egg-info/dependency_links.txt
+src/ligotools.egg-info/requires.txt
+src/ligotools.egg-info/top_level.txt

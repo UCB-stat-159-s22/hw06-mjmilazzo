@@ -40,6 +40,10 @@ if [[ ! -d $env_loc_full ]]; then
 		mamba create -f $env_file -p $env_loc_full # not "mamba env create"
 		# mamba env update --file $env_file --prune
 		conda activate $env_name
+		
+		# Install pytest to enable installing ligotools
+		conda install -c anaconda pytest -y
+		
 		python2 -m ipykernel install --user --name $env_name --display-name "IPython - $env_name"
 	fi
 fi
