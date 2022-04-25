@@ -22,4 +22,4 @@ html:
   use_repository_button: true
 
 launch_buttons:
-  binderhub_html: https://mybinder.org
+  binderhub_html: https://mybinder.org/v2/gh/UCB-stat-159-s22/hw06-mjmilazzo/HEAD?labpath=index.ipynb # https://mybinder.org
