@@ -1,2 +1,2 @@
-from ligotools import readligo
-from ligotools import utils
+from ligotools import readligo as rl
+from ligotools import utils as lutils
