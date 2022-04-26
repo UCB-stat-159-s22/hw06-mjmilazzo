@@ -25,4 +25,3 @@ clean :
 	rm -r figures/*
 	rm -r audio/*
 	rm -rf _build
-	rm conf.py
