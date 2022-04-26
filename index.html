@@ -601,34 +601,8 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Install local build of ligotools</span>
-<span class="o">!</span>bash -ic <span class="s2">&quot;python2 -m pip install -e ligotools&quot;</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Yellow">DEPRECATION: Python 2.7 reached the end of its life on January 1st, 2020. Please upgrade your Python as Python 2.7 is no longer maintained. pip 21.0 will drop support for Python 2.7 in January 2021. More details about Python 2 support in pip, can be found at https://pip.pypa.io/en/latest/development/release-process/#python-2-support</span>
-Obtaining file:///home/jovyan/hw/hw06-mjmilazzo/ligotools
-Requirement already satisfied: numpy in /home/jovyan/envs/ligo/lib/python2.7/site-packages (from ligotools==0.0.1) (1.16.5)
-Requirement already satisfied: scipy in /home/jovyan/envs/ligo/lib/python2.7/site-packages (from ligotools==0.0.1) (1.2.1)
-Requirement already satisfied: matplotlib in /home/jovyan/envs/ligo/lib/python2.7/site-packages (from ligotools==0.0.1) (2.2.5)
-Requirement already satisfied: h5py in /home/jovyan/envs/ligo/lib/python2.7/site-packages (from ligotools==0.0.1) (2.10.0)
-Requirement already satisfied: cycler&gt;=0.10 in /home/jovyan/envs/ligo/lib/python2.7/site-packages (from matplotlib-&gt;ligotools==0.0.1) (0.10.0)
-Requirement already satisfied: kiwisolver&gt;=1.0.1 in /home/jovyan/envs/ligo/lib/python2.7/site-packages (from matplotlib-&gt;ligotools==0.0.1) (1.1.0)
-Requirement already satisfied: six&gt;=1.10 in /home/jovyan/envs/ligo/lib/python2.7/site-packages (from matplotlib-&gt;ligotools==0.0.1) (1.16.0)
-Requirement already satisfied: subprocess32 in /home/jovyan/envs/ligo/lib/python2.7/site-packages (from matplotlib-&gt;ligotools==0.0.1) (3.5.4)
-Requirement already satisfied: backports.functools-lru-cache in /home/jovyan/envs/ligo/lib/python2.7/site-packages (from matplotlib-&gt;ligotools==0.0.1) (1.6.1)
-Requirement already satisfied: pyparsing!=2.0.4,!=2.1.2,!=2.1.6,&gt;=2.0.1 in /home/jovyan/envs/ligo/lib/python2.7/site-packages (from matplotlib-&gt;ligotools==0.0.1) (2.4.7)
-Requirement already satisfied: pytz in /home/jovyan/envs/ligo/lib/python2.7/site-packages (from matplotlib-&gt;ligotools==0.0.1) (2020.1)
-Requirement already satisfied: python-dateutil&gt;=2.1 in /home/jovyan/envs/ligo/lib/python2.7/site-packages (from matplotlib-&gt;ligotools==0.0.1) (2.8.1)
-Requirement already satisfied: setuptools in /home/jovyan/envs/ligo/lib/python2.7/site-packages (from kiwisolver&gt;=1.0.1-&gt;matplotlib-&gt;ligotools==0.0.1) (44.0.0.post20200102)
-Installing collected packages: ligotools
-  Attempting uninstall: ligotools
-    Found existing installation: ligotools 0.0.1
-    Uninstalling ligotools-0.0.1:
-      Successfully uninstalled ligotools-0.0.1
-  Running setup.py develop for ligotools
-Successfully installed ligotools
+<div class="highlight-ipython2 notranslate"><div class="highlight"><pre><span></span><span class="c1"># # Install local build of ligotools</span>
+<span class="c1"># !bash -ic &quot;python2 -m pip install -e ligotools&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -1277,93 +1251,31 @@ The LIGO Scientific Collaboration, the Virgo Collaboration, <a class="reference 
 <span class="c1"># loop over the detectors</span>
 <span class="n">dets</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;H1&#39;</span><span class="p">,</span> <span class="s1">&#39;L1&#39;</span><span class="p">]</span>
 <span class="k">for</span> <span class="n">det</span> <span class="ow">in</span> <span class="n">dets</span><span class="p">:</span>
-
-    <span class="k">if</span> <span class="n">det</span> <span class="ow">is</span> <span class="s1">&#39;L1&#39;</span><span class="p">:</span> <span class="n">data</span> <span class="o">=</span> <span class="n">strain_L1</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="k">else</span><span class="p">:</span>           <span class="n">data</span> <span class="o">=</span> <span class="n">strain_H1</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-
-    <span class="c1"># -- Calculate the PSD of the data.  Also use an overlap, and window:</span>
-    <span class="n">data_psd</span><span class="p">,</span> <span class="n">freqs</span> <span class="o">=</span> <span class="n">mlab</span><span class="o">.</span><span class="n">psd</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">Fs</span> <span class="o">=</span> <span class="n">fs</span><span class="p">,</span> <span class="n">NFFT</span> <span class="o">=</span> <span class="n">NFFT</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="n">psd_window</span><span class="p">,</span> <span class="n">noverlap</span><span class="o">=</span><span class="n">NOVL</span><span class="p">)</span>
-
-    <span class="c1"># Take the Fourier Transform (FFT) of the data and the template (with dwindow)</span>
-    <span class="n">data_fft</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">data</span><span class="o">*</span><span class="n">dwindow</span><span class="p">)</span> <span class="o">/</span> <span class="n">fs</span>
-
-    <span class="c1"># -- Interpolate to get the PSD values at the needed frequencies</span>
-    <span class="n">power_vec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">datafreq</span><span class="p">),</span> <span class="n">freqs</span><span class="p">,</span> <span class="n">data_psd</span><span class="p">)</span>
-
-    <span class="c1"># -- Calculate the matched filter output in the time domain:</span>
-    <span class="c1"># Multiply the Fourier Space template and data, and divide by the noise power in each frequency bin.</span>
-    <span class="c1"># Taking the Inverse Fourier Transform (IFFT) of the filter output puts it back in the time domain,</span>
-    <span class="c1"># so the result will be plotted as a function of time off-set between the template and the data:</span>
-    <span class="n">optimal</span> <span class="o">=</span> <span class="n">data_fft</span> <span class="o">*</span> <span class="n">template_fft</span><span class="o">.</span><span class="n">conjugate</span><span class="p">()</span> <span class="o">/</span> <span class="n">power_vec</span>
-    <span class="n">optimal_time</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifft</span><span class="p">(</span><span class="n">optimal</span><span class="p">)</span><span class="o">*</span><span class="n">fs</span>
-
-    <span class="c1"># -- Normalize the matched filter output:</span>
-    <span class="c1"># Normalize the matched filter output so that we expect a value of 1 at times of just noise.</span>
-    <span class="c1"># Then, the peak of the matched filter output will tell us the signal-to-noise ratio (SNR) of the signal.</span>
-    <span class="n">sigmasq</span> <span class="o">=</span> <span class="mi">1</span><span class="o">*</span><span class="p">(</span><span class="n">template_fft</span> <span class="o">*</span> <span class="n">template_fft</span><span class="o">.</span><span class="n">conjugate</span><span class="p">()</span> <span class="o">/</span> <span class="n">power_vec</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">*</span> <span class="n">df</span>
-    <span class="n">sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">sigmasq</span><span class="p">))</span>
-    <span class="n">SNR_complex</span> <span class="o">=</span> <span class="n">optimal_time</span><span class="o">/</span><span class="n">sigma</span>
-
-    <span class="c1"># shift the SNR vector by the template length so that the peak is at the END of the template</span>
-    <span class="n">peaksample</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">size</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>  <span class="c1"># location of peak in the template</span>
-    <span class="n">SNR_complex</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">SNR_complex</span><span class="p">,</span><span class="n">peaksample</span><span class="p">)</span>
-    <span class="n">SNR</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">SNR_complex</span><span class="p">)</span>
-
-    <span class="c1"># find the time and SNR value at maximum:</span>
-    <span class="n">indmax</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">SNR</span><span class="p">)</span>
-    <span class="n">timemax</span> <span class="o">=</span> <span class="n">time</span><span class="p">[</span><span class="n">indmax</span><span class="p">]</span>
-    <span class="n">SNRmax</span> <span class="o">=</span> <span class="n">SNR</span><span class="p">[</span><span class="n">indmax</span><span class="p">]</span>
-
-    <span class="c1"># Calculate the &quot;effective distance&quot; (see FINDCHIRP paper for definition)</span>
-    <span class="c1"># d_eff = (8. / SNRmax)*D_thresh</span>
-    <span class="n">d_eff</span> <span class="o">=</span> <span class="n">sigma</span> <span class="o">/</span> <span class="n">SNRmax</span>
-    <span class="c1"># -- Calculate optimal horizon distnace</span>
-    <span class="n">horizon</span> <span class="o">=</span> <span class="n">sigma</span><span class="o">/</span><span class="mi">8</span>
-
-    <span class="c1"># Extract time offset and phase at peak</span>
-    <span class="n">phase</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">angle</span><span class="p">(</span><span class="n">SNR_complex</span><span class="p">[</span><span class="n">indmax</span><span class="p">])</span>
-    <span class="n">offset</span> <span class="o">=</span> <span class="p">(</span><span class="n">indmax</span><span class="o">-</span><span class="n">peaksample</span><span class="p">)</span>
-
-    <span class="c1"># apply time offset, phase, and d_eff to template </span>
-    <span class="n">template_phaseshifted</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">template</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span><span class="o">*</span><span class="n">phase</span><span class="p">))</span>    <span class="c1"># phase shift the template</span>
-    <span class="n">template_rolled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">template_phaseshifted</span><span class="p">,</span><span class="n">offset</span><span class="p">)</span> <span class="o">/</span> <span class="n">d_eff</span>  <span class="c1"># Apply time offset and scale amplitude</span>
-    
-    <span class="c1"># Whiten and band-pass the template for plotting</span>
-    <span class="n">template_whitened</span> <span class="o">=</span> <span class="n">lutils</span><span class="o">.</span><span class="n">whiten</span><span class="p">(</span><span class="n">template_rolled</span><span class="p">,</span><span class="n">interp1d</span><span class="p">(</span><span class="n">freqs</span><span class="p">,</span> <span class="n">data_psd</span><span class="p">),</span><span class="n">dt</span><span class="p">)</span>  <span class="c1"># whiten the template</span>
-    <span class="n">template_match</span> <span class="o">=</span> <span class="n">filtfilt</span><span class="p">(</span><span class="n">bb</span><span class="p">,</span> <span class="n">ab</span><span class="p">,</span> <span class="n">template_whitened</span><span class="p">)</span> <span class="o">/</span> <span class="n">normalization</span> <span class="c1"># Band-pass the template</span>
-    
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;For detector </span><span class="si">{0}</span><span class="s1">, maximum at </span><span class="si">{1:.4f}</span><span class="s1"> with SNR = </span><span class="si">{2:.1f}</span><span class="s1">, D_eff = </span><span class="si">{3:.2f}</span><span class="s1">, horizon = </span><span class="si">{4:0.1f}</span><span class="s1"> Mpc&#39;</span> 
-          <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">det</span><span class="p">,</span><span class="n">timemax</span><span class="p">,</span><span class="n">SNRmax</span><span class="p">,</span><span class="n">d_eff</span><span class="p">,</span><span class="n">horizon</span><span class="p">))</span>
-
-    <span class="k">if</span> <span class="n">make_plots</span><span class="p">:</span>
-        <span class="c1"># plotting changes for the detectors:</span>
-        <span class="k">if</span> <span class="n">det</span> <span class="ow">is</span> <span class="s1">&#39;L1&#39;</span><span class="p">:</span> 
-            <span class="n">pcolor</span><span class="o">=</span><span class="s1">&#39;g&#39;</span>
-            <span class="n">strain_whitenbp</span> <span class="o">=</span> <span class="n">strain_L1_whitenbp</span>
-            <span class="n">template_L1</span> <span class="o">=</span> <span class="n">template_match</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">pcolor</span><span class="o">=</span><span class="s1">&#39;r&#39;</span>
-            <span class="n">strain_whitenbp</span> <span class="o">=</span> <span class="n">strain_H1_whitenbp</span>
-            <span class="n">template_H1</span> <span class="o">=</span> <span class="n">template_match</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-
-        <span class="n">lutils</span><span class="o">.</span><span class="n">plot_PSD</span><span class="p">(</span>
-            <span class="n">det</span><span class="p">,</span>
-            <span class="n">pcolor</span><span class="p">,</span>
-            <span class="n">strain_whitenbp</span><span class="p">,</span>
-            <span class="n">template_match</span><span class="p">,</span>
-            <span class="n">time</span><span class="p">,</span>
-            <span class="n">timemax</span><span class="p">,</span>
-            <span class="n">SNR</span><span class="p">,</span>
-            <span class="n">eventname</span><span class="p">,</span>
-            <span class="n">plottype</span><span class="p">,</span>
-            <span class="n">tevent</span><span class="p">,</span>
-            <span class="n">template_fft</span><span class="p">,</span>
-            <span class="n">datafreq</span><span class="p">,</span>
-            <span class="n">d_eff</span><span class="p">,</span>
-            <span class="n">freqs</span><span class="p">,</span>
-            <span class="n">data_psd</span><span class="p">,</span>
-            <span class="n">fs</span><span class="p">,</span>
-        <span class="p">)</span>
+    <span class="n">lutils</span><span class="o">.</span><span class="n">plot_PSD</span><span class="p">(</span>
+        <span class="n">det</span><span class="p">,</span>
+        <span class="n">strain_L1</span><span class="p">,</span>
+        <span class="n">strain_H1</span><span class="p">,</span>
+        <span class="n">fs</span><span class="p">,</span>
+        <span class="n">NFFT</span><span class="p">,</span>
+        <span class="n">psd_window</span><span class="p">,</span>
+        <span class="n">NOVL</span><span class="p">,</span>
+        <span class="n">dwindow</span><span class="p">,</span>
+        <span class="n">datafreq</span><span class="p">,</span>
+        <span class="n">template_fft</span><span class="p">,</span>
+        <span class="n">df</span><span class="p">,</span>
+        <span class="n">time</span><span class="p">,</span>
+        <span class="n">template</span><span class="p">,</span>
+        <span class="n">dt</span><span class="p">,</span>
+        <span class="n">bb</span><span class="p">,</span>
+        <span class="n">ab</span><span class="p">,</span>
+        <span class="n">normalization</span><span class="p">,</span>
+        <span class="n">strain_H1_whitenbp</span><span class="p">,</span>
+        <span class="n">strain_L1_whitenbp</span><span class="p">,</span>        
+        <span class="n">eventname</span><span class="p">,</span>
+        <span class="n">plottype</span><span class="p">,</span>
+        <span class="n">tevent</span><span class="p">,</span>
+        <span class="n">make_plots</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
 </pre></div>
 </div>
 </div>
