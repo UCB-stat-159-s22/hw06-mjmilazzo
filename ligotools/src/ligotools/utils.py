@@ -34,12 +34,16 @@ from scipy.io import wavfile
 def write_wavfile(
     filename,
     fs,
-    data
+    data,
+    writeout=True,
     ):
     """ keep the data within integer limits, 
     and write to wavfile """
     d = np.int16(data/np.max(np.abs(data)) * 32767 * 0.9)
-    wavfile.write(filename,int(fs), d)
+    if writeout:
+        wavfile.write(filename,int(fs), d)
+    else:
+        return d
 
 ##################################################################################
 
