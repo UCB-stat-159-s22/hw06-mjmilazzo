@@ -1,0 +1,9 @@
+##################################################
+## Binder has been having problems installing ligotools (via pip) to correct environment
+#
+## Previous code:
+# !bash -ic "conda init bash"
+# !bash -ic "python2 -m pip install -e ligotools --src /srv/conda/envs/kernel/lib/python2.7/site-packages"
+##################################################
+## New code:
+cp -rf ligotools/src/ligotools /srv/conda/envs/kernel/lib/python2.7/site-packages/ligotools
